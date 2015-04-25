@@ -1,5 +1,6 @@
 import codecs
 
+
 def load_text():
     opinions = {}
     with codecs.open('opinie1', 'r', encoding='utf-8') as my_file:
@@ -14,3 +15,15 @@ def load_text():
                     print key
                 opinions[key] = float(value)
         return opinions
+
+
+def get_data():
+    """TODO
+    """
+    return [[[1.5, 2.5], [2.5, 1.5]], [2.0, 4.0]]
+
+
+def get_tfidf(text):
+    """TODO
+    """
+    return [2.0, 2.0]
