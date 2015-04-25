@@ -3,7 +3,12 @@
 
 import codecs
 import math
+import sys
 
+
+def update_progress(progress):
+    sys.stdout.write('\r[{0}{1}] {2}%'.format('#'*(progress/10), ' '*(10 - progress/10), progress))
+    sys.stdout.flush()
 
 def load_text():
     opinions = {}
@@ -20,25 +25,25 @@ def split_to_words(doc):
 
 def freq(word, doc):
     return doc.count(word)
-  
+
 def word_count(doc):
     return len(doc)
- 
+
 def tf(word, doc):
     return (freq(word, doc) / float(word_count(doc)))
- 
+
 def num_docs_containing(word, list_of_docs):
     count = 0
     for document in list_of_docs:
         if freq(word, document) > 0:
             count += 1
     return 1 + count
- 
+
 def idf(word, list_of_docs):
     return math.log(len(list_of_docs) /
             float(num_docs_containing(word, list_of_docs)))
- 
- 
+
+
 def tf_idf(word, doc, list_of_docs):
     return (tf(word, doc) * idf(word, list_of_docs))
 
@@ -61,7 +66,7 @@ def choose_words(dictionary):
                 maximum = tfidf
                 best_word = word
         result.add(word)
-        print i
+        update_progress(i * 100 / len(dictionary))
     return result
 
 def count_vec_list(dictionary):
@@ -83,14 +88,15 @@ def count_vec(text, dictionary, words):
         vector.append(tf_idf_result)
     return vector
 
-def get_data(dictionary):
+def get_data(dictionary, keywords):
     vectors = []
     stars =[]
-    words = choose_words(dictionary)
+    i = 0
     for key, value in dictionary.iteritems():
-        vector = count_vec(key, dictionary, words)
+        vector = count_vec(key, dictionary, keywords)
         vectors.append(vector)
         stars.append(value)
-        print value
+        update_progress(i * 100 / len(dictionary))
+        i += 1
     return [vectors, stars]
 
