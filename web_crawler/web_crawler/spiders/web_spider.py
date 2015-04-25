@@ -8,14 +8,8 @@ import codecs
 class WebSpider(BaseSpider):
     name = "web_spider"
 
-    start_urls = [
-        "http://www.ceneo.pl/32065633#tab=reviews",
-        "http://www.ceneo.pl/32065633/opinie-2",
-        "http://www.ceneo.pl/32065633/opinie-3",
-        "http://www.ceneo.pl/32065633/opinie-4",
-        "http://www.ceneo.pl/32065633/opinie-5",
-        "http://www.ceneo.pl/32065633/opinie-6",
-    ]
+    with open("urls", 'r') as f:
+        start_urls = f.read().splitlines()
 
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
@@ -34,11 +28,10 @@ class WebSpider(BaseSpider):
                     my_file.write(ratings[item])
                     my_file.write(";")
                     my_file.write(reviews[item])
-                    my_file.write(";;;;\n")
+                    my_file.write("\n\n")
                     len_reviews += 1
 
-            print "==============================================="
-            print "MAMY JUZ TYLE RECENZJI: "
-            print len_reviews
-            print "\n=============================================="
+            with open('ilosc', 'a') as ilosc:
+                ilosc.write(str(len_reviews))
+                ilosc.write("\n")
 
