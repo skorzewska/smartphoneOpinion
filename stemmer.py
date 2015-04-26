@@ -41,7 +41,7 @@ def remove_nouns(word):
     if len(word) > 7 and word[-5:] in {"zacja", u"zacją", "zacji"}:
         return word[:-4]
     if len(word) > 6 and word[-4:] in {
-        "acja", "acji", u"acją", "tach", "anie", "enie", "eniu", "aniu"}:
+            "acja", "acji", u"acją", "tach", "anie", "enie", "eniu", "aniu"}:
         return word[:-4]
     if len(word) > 6 and word.endswith("tyka"):
         return word[:-2]
@@ -53,10 +53,10 @@ def remove_nouns(word):
         return word[:-2]
     return word
 
-    
+
 def remove_adjective_ends(word):
-    if len(word) > 7 and word.startswith("naj") and (word.endswith("sze")
-    or word.endswith("szy")):
+    if len(word) > 7 and word.startswith("naj")
+    and (word.endswith("sze") or word.endswith("szy")):
         return word[3:-3]
     if len(word) > 7 and word.startswith("naj") and word.endswith("szych"):
         return word[3:-5]
@@ -68,7 +68,7 @@ def remove_adjective_ends(word):
         return word[:-2]
     return word
 
-  
+
 def remove_adverbs_ends(word):
     if len(word) > 4 and word[:-3] in {"nie", "wie"}:
         return word[:-2]
@@ -99,5 +99,3 @@ def stem(text):
         word = remove_verbs_ends(word)
         result.append(word)
     return result
-
-# stem("Super smartfon w dobrej cenie, doskonale sprawdza się nawet w słońcu. Polecam serdecznie. ")
