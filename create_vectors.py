@@ -5,6 +5,7 @@ import codecs
 import math
 import sys
 import stemmer
+import json
 
 
 KEYWORDS_FILE = 'tfidf_keywords'
@@ -84,10 +85,10 @@ def choose_words(dictionary):
                 best_word = word
             result.add(word)
         update_progress(i * 100 / len(dictionary))
-    return result
+    return list(result)
 
 
-def dump_keywords(keywords):
+def dump_keywords():
     TRAINSET = load_text()
     KEYWORDS = choose_words(TRAINSET)
     with codecs.open(KEYWORDS_FILE, 'w', encoding='utf-8') as kfile:
@@ -109,12 +110,12 @@ def count_vec(text, dictionary, words, use_tfidf):
     return vector
 
 
-def get_data(dictionary, keywords):
+def get_data(dictionary, keywords, use_tfidf):
     vectors = []
     stars = []
     i = 0
     for key, value in dictionary.iteritems():
-        vector = count_vec(key, dictionary, keywords)
+        vector = count_vec(key, dictionary, keywords, use_tfidf)
         vectors.append(vector)
         stars.append(value)
         update_progress(i * 100 / len(dictionary))

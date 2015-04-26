@@ -17,7 +17,7 @@ import create_vectors
 def get_regression(trainset, keywords):
     """Return regression
     """
-    data = create_vectors.get_data(trainset, keywords)
+    data = create_vectors.get_data(trainset, keywords, True)
     regression = linear_model.LinearRegression()
     regression.fit(data[0], data[1])
     return regression
@@ -44,4 +44,4 @@ if __name__ == '__main__':
         print 'Calculating regression function...'
         REGR = get_regression(TRAINSET, KEYWORDS)
         print 'Predicting rating...'
-        print get_rating(OPINION, REGR, TRAINSET, KEYWORDS, False)
+        print get_rating(OPINION, REGR, TRAINSET, KEYWORDS, True)

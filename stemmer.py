@@ -55,8 +55,7 @@ def remove_nouns(word):
 
 
 def remove_adjective_ends(word):
-    if len(word) > 7 and word.startswith("naj")
-    and (word.endswith("sze") or word.endswith("szy")):
+    if len(word) > 7 and word.startswith("naj") and (word.endswith("sze") or word.endswith("szy")):
         return word[3:-3]
     if len(word) > 7 and word.startswith("naj") and word.endswith("szych"):
         return word[3:-5]
@@ -88,7 +87,7 @@ def remove_plural_forms(word):
 def stem(text):
     result = []
     for word in text:
-        word = word.strip(",.?! ")
+        word = word.strip(",.?!() ")
         word = word.lower()
         word = remove_general_ends(word)
         word = remove_diminutive(word)
