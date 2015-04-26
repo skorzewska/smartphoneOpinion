@@ -86,7 +86,8 @@ def count_vec(text, dictionary, words):
     vector = []
     for word in words:
         if word in text:
-            tf_idf_result = tf_idf(word, text, dictionary.keys())
+            # tf_idf_result = tf_idf(word, text, dictionary.keys())
+            tf_idf_result = 1.0
         else:
             tf_idf_result = 0.0
         vector.append(tf_idf_result)

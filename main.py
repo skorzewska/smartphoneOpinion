@@ -4,11 +4,14 @@
 """System that rates (1-5) a review of a smartphone
 """
 
-import create_vectors
-import sys
+import codecs
+import json
 import stemmer
+import sys
 
 from sklearn import linear_model
+
+import create_vectors
 
 
 def get_regression(trainset, keywords):
@@ -28,15 +31,18 @@ def get_rating(text, regression, trainset, keywords):
 
 
 if __name__ == '__main__':
-    OPINION = sys.argv[1].decode('utf-8')
+    OPINION = sys.argv[2].decode('utf-8')
     OPINION = create_vectors.split_to_words(OPINION)
     OPINION = stemmer.stem(OPINION)
     OPINION = " ".join(OPINION)
     print 'Loading trainset...'
     TRAINSET = create_vectors.load_text()
     print 'Choosing keywords...'
-    KEYWORDS = create_vectors.choose_words(TRAINSET)
-    print 'Calculating regression function...'
-    REGR = get_regression(TRAINSET, KEYWORDS)
-    print 'Predicting rating...'
-    print get_rating(OPINION, REGR, TRAINSET, KEYWORDS)
+    KEYWORDS_FILE = sys.argv[1]
+    with codecs.open(KEYWORDS_FILE, 'r', encoding='utf-8') as kfile:
+        KEYWORDS = json.load(kfile)
+    # KEYWORDS = create_vectors.choose_words(TRAINSET)
+        print 'Calculating regression function...'
+        REGR = get_regression(TRAINSET, KEYWORDS)
+        print 'Predicting rating...'
+        print get_rating(OPINION, REGR, TRAINSET, KEYWORDS)
