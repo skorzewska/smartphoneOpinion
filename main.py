@@ -23,10 +23,10 @@ def get_regression(trainset, keywords):
     return regression
 
 
-def get_rating(text, regression, trainset, keywords):
+def get_rating(text, regression, trainset, keywords, use_tfidf):
     """Return rating of given text
     """
-    vec = create_vectors.count_vec(text, trainset, keywords)
+    vec = create_vectors.count_vec(text, trainset, keywords, use_tfidf)
     return regression.predict(vec)
 
 
@@ -41,8 +41,7 @@ if __name__ == '__main__':
     KEYWORDS_FILE = sys.argv[1]
     with codecs.open(KEYWORDS_FILE, 'r', encoding='utf-8') as kfile:
         KEYWORDS = json.load(kfile)
-    # KEYWORDS = create_vectors.choose_words(TRAINSET)
         print 'Calculating regression function...'
         REGR = get_regression(TRAINSET, KEYWORDS)
         print 'Predicting rating...'
-        print get_rating(OPINION, REGR, TRAINSET, KEYWORDS)
+        print get_rating(OPINION, REGR, TRAINSET, KEYWORDS, False)
