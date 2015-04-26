@@ -6,6 +6,7 @@
 
 import create_vectors
 import sys
+import stemmer
 
 from sklearn import linear_model
 
@@ -27,7 +28,10 @@ def get_rating(text, regression, trainset, keywords):
 
 
 if __name__ == '__main__':
-    OPINION = sys.argv[1]
+    OPINION = sys.argv[1].decode('utf-8')
+    OPINION = create_vectors.split_to_words(OPINION)
+    OPINION = stemmer.stem(OPINION)
+    OPINION = " ".join(OPINION)
     print 'Loading trainset...'
     TRAINSET = create_vectors.load_text()
     print 'Choosing keywords...'

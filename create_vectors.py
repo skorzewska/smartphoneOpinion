@@ -4,6 +4,7 @@
 import codecs
 import math
 import sys
+import stemmer
 
 
 def update_progress(progress):
@@ -16,6 +17,9 @@ def load_text():
         for line in my_file:
             pair = line.split(";", 2)
             key = pair[1]
+            key = split_to_words(key)
+            key = stemmer.stem(key)
+            key = " ".join(key)
             value = pair[0]
             opinions[key] = float(value)
     return opinions
@@ -65,7 +69,7 @@ def choose_words(dictionary):
             if tfidf > maximum:
                 maximum = tfidf
                 best_word = word
-        result.add(word)
+            result.add(word)
         update_progress(i * 100 / len(dictionary))
     return result
 
